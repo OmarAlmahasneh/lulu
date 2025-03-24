@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+matplotlib
+seaborn
+requests
+sqlite3
+boto3
+gspread
+google-auth
+sqlalchemy
+openai
