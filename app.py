@@ -3,12 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-import requests
-import sqlite3
-import boto3
-import gspread
-from google.oauth2.service_account import Credentials
-from sqlalchemy import create_engine
 from openai import OpenAI
 
 # Function to load data from uploaded file
@@ -58,8 +52,7 @@ def exploratory_analysis(df):
 
         st.subheader("Variable Relationships")
         if len(num_cols) > 1:
-            fig, ax = plt.subplots()
-            sns.pairplot(df[num_cols[:5]])
+            fig = sns.pairplot(df[num_cols[:5]])
             st.pyplot(fig)
 
 # Function to create an interactive dashboard
@@ -92,11 +85,11 @@ def ai_analysis(df):
                 client = OpenAI(api_key=openai_api_key)
                 response = client.completions.create(
                     model="gpt-4",
-                    prompt=f"Analyze the following dataset:
+                    prompt=f"""Analyze the following dataset:
 
 {df.head().to_string()}
 
-{query}",
+{query}""",
                     max_tokens=200
                 )
                 st.write(response.choices[0].text)
